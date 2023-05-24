@@ -31,7 +31,6 @@
             <Button
                 x:Name="StartBtn"
                 Text="Spustit hru"
-                SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnStartClicked"
                 HorizontalOptions="Center" />
 
