@@ -50,7 +50,7 @@ namespace SnakeGame.Models
         {
             this.playing = true;
             this.canvas = canvas;
-            this.snake = new Snake(this,5,5);
+            this.snake = new Snake(5,5);
             this.food = new List<Food> { };
             this.AddFood();
 
@@ -110,22 +110,53 @@ namespace SnakeGame.Models
         {      
             while (playing)
             {
-                this.snake.Update();
-                
-                List<Tile> output = new List<Tile>();
-                foreach (Tile tile in this.snake.body)
-                {
-                    output.Add(tile);
-                }
-                foreach(Food food in this.food)
-                {
-                    output.Add(food);
-                }
-                canvas.Drawable = new GraphicsDrawable(output);
-                canvas.Invalidate();
+                this.Tick();
+                this.Render();
                 await Task.Delay(200);
             }
             return;
+        }
+
+        public void Tick()
+        {
+            var newTile = this.snake.NextMove();
+            if (!IsSnake(newTile.x, newTile.y) && newTile.x <= Board.BOARD_SIZE_X && newTile.y <= Board.BOARD_SIZE_Y && newTile.x > 0 && newTile.y > 0)
+            {
+                if (IsFood(newTile.x, newTile.y))
+                {
+                    RemoveFood(newTile.x, newTile.y);
+                    this.snake.MoveTo(newTile, true);
+                }
+                else
+                {
+                    this.snake.MoveTo(newTile, false);
+                }
+            }
+            else
+            {
+                GameOver(this.snake.score);
+            }
+        }
+
+        public void Render()
+        {
+            var board = DumpBoard();
+            canvas.Drawable = new GraphicsDrawable(board);
+            canvas.Invalidate();
+        }
+
+        public List<Tile> DumpBoard()
+        {
+            List<Tile> output = new List<Tile>();
+            foreach (Tile tile in this.snake.body)
+            {
+                output.Add(tile);
+            }
+            foreach (Food food in this.food)
+            {
+                output.Add(food);
+            }
+            return output;
         }
 
         public void KeyPress(Snake.DIRECTION direction)

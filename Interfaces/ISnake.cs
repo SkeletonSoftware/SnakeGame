@@ -14,12 +14,21 @@ namespace SnakeGame.Interfaces
         /// <summary>
         /// Metoda, která provede všechny akce, které by se měly stát za jeden tick
         /// </summary>
-        public void Update();
         /// <summary>
         /// Změna směru pohybu hada
         /// </summary>
         /// <param name="direction">Enum, který obsahuje slovně zadaný směr pohybu</param>
         public void ChangeDirection(DIRECTION direction);
+        /// <summary>
+        /// Posune hada na další políčko
+        /// </summary>
+        /// <param name="tile">Políčko, na které se má had posunout</param>
+        /// <param name="isFood">Informace o tom, zda u tohoto posunu snědl jídlo</param>
+        public void MoveTo(Tile tile, bool isFood);
+        /// <summary>
+        /// Vypočte a následně vrátí, na jaké pole by se měl had posunout při příštím ticku
+        /// </summary>
+        public Tile NextMove();
 
     }
 }
