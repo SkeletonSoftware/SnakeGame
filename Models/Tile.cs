@@ -10,15 +10,20 @@ namespace SnakeGame.Models
     {
         public int x;
         public int y;
-        public int w;
-        public Color color;
+        public TileType type;
+        public enum TileType {
+            Food,
+            Snake,
+        };
 
-        public Tile(int x, int y, int w, Color color)
+        #region Constructor
+        public Tile(int x, int y, TileType type)
         {
             this.x = x;
             this.y = y;
-            this.w = w;
-            this.color = color;
+            this.type = type;
         }
+        #endregion
+
     }
 }

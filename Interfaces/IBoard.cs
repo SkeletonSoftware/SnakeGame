@@ -10,52 +10,29 @@ namespace SnakeGame.Interfaces
     public interface IBoard
     {
         /// <summary>
-        /// Přepíná stav hry mezi pauzou a hraním
-        /// </summary>
-        public void GamePause();
-        /// <summary>
-        /// Provolá se, když hra skončí. Vypne hru a znemožní její obnovení.
-        /// </summary>
-        /// <param name="score">Score, kterého had během svého života dosáhl</param>
-        public void GameOver(int score);
-        /// <summary>
         /// Odchytávání stisků klávesnice
         /// </summary>
         /// <param name="direction">Enum definovaný pro všechny směry, kterými může had chodit</param>
         public void KeyPress(Snake.DIRECTION direction);
         /// <summary>
-        /// Hlavní smyčka. Zde probíhá update celého herního cyklu. Dokud je proměnná playing na stavená na true, smyčka běží.
+        /// Inicializuje herní desku defaultními instancemi
         /// </summary>
-        public void Update();
+        public void InitBoard();
         /// <summary>
-        /// Odstraní jídlo na zadaných souřadnicích
+        /// Inicializuje heríní desku zadanými instancemi. Tato metoda je určena pro unit testy, nikoliv pro produkční použití.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        public void RemoveFood(int x, int y);
+        /// <param name="snake">Had, který se přidá hernímu poli</param>
+        /// <param name="food">List jídel, který se přidá hernímu poli</param>
+        public void TestInitBoard(Snake snake, List<Food> food);
         /// <summary>
-        /// Zkontroluje, zda se na zadaných souřadnicích nachází jídlo
+        /// Hlavní smyčka hry. Provoláním metody se provede jeden herní cyklus (=tick).
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns>Ano/Ne</returns>
-        public bool IsFood(int x, int y);
+        /// <returns>Zda tick proběhl bez chyb. Jinak také řečeno, zda hra dále pokračuje (true) nebo tímto tickem skončila (false)</returns>
+        public bool Tick();
         /// <summary>
-        /// Zkontroluje, zda se na zadaných souřadnicích nachází had
+        /// Vrací všechny instance třídy Tile (políčka), které herní deska obsahuje.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns>Ano/Ne</returns>
-        public bool IsSnake(int x, int y);
-        /// <summary>
-        /// Přidá jídlo na náhodnou pozici na mapě
-        /// </summary>
-        public void AddFood();
-        /// <summary>
-        /// Vyrenderuje herní pole
-        /// </summary>
-        /// <param name="canvas">Instance GraphicsView, na které lze volat Invalidate() pro její překreslení</param>
-        public void CreateBoard(GraphicsView canvas);
-
+        /// <returns></returns>
+        public List<Tile> DumpBoard();
     }
 }

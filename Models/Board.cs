@@ -20,129 +20,65 @@ namespace SnakeGame.Models
          * Tímto se vygeneruje herní pole
          * 
          * Proměnné:
-         * BOARD_SIZE = rozměr herního pole - x a y v počtech políček, w = šířka jednoho políčka
+         * BOARD_SIZE = rozměr herního pole - x a y v počtech políček
          * playing = bool označující, zda probíhá hra.
          * snake = instance hada, který je přiřazen tomut poli
          * food = List obsahující instance jídel přiřazených tomuto poli
-         * canvas = odkaz na instanci GraphicsView. Je zde pro provolání metody Invalidate (překreslení Canvasu)
-         * 
-         * Metody:
-         * CreateBoard = vygeneruje herní pole
-         * AddFood = přidá na náhodnou pozici jídlo
-         * IsFood = prověří, jestli je na daných souřadnicích nachází jidlo
-         * RemoveFood = odstraní jídlo z daných souřadnic
-         * GameOver = ukončí hru
-         * Update = Herní smyčka. Stará se o provolání posunu hada a následné překreslení celého pole.
-         *          Toto překreslení provádí třída GraphicDrawable, Update smyčka jí pouze provolá.
          * 
          */
 
-        public static readonly int BOARD_SIZE_X = 20;
-        public static readonly int BOARD_SIZE_Y = 20;
-        public static readonly int BOARD_SIZE_W = 30;
+        private readonly int BOARD_SIZE_X;
+        private readonly int BOARD_SIZE_Y;
 
-        private bool playing;
+        public bool playing;
         private Snake snake;
         private List<Food> food;
-        private GraphicsView canvas;
 
-        public void CreateBoard(GraphicsView canvas)
+        #region Constructor
+        public Board(int x_size,  int y_size)
+        {
+            this.BOARD_SIZE_X = x_size;
+            this.BOARD_SIZE_Y = y_size;
+        }
+        #endregion
+
+        #region Public methods
+        public void InitBoard()
         {
             this.playing = true;
-            this.canvas = canvas;
-            this.snake = new Snake(5,5);
+            this.snake = new Snake(5, 5);
             this.food = new List<Food> { };
             this.AddFood();
-
-            this.Update();
         }
-
-        public void AddFood()
+        public void TestInitBoard(Snake snake, List<Food> food)
         {
-            Random rnd = new Random(((int)DateTime.Now.Ticks));
-            var randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
-            var randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
-            while(IsSnake(randomX, randomY))
-            {
-                randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
-                randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
-            }
-            this.food.Add(new Food(randomX, randomY));
-        }
-        public bool IsFood(int x, int y)
-        {
-            foreach(Food food in this.food)
-            {
-                if(food.x ==  x && food.y == y) 
-                    return true;
-            }
-            return false;
+            this.playing = true;
+            this.snake = snake;
+            this.food = food;
         }
 
-        public bool IsSnake(int x, int y)
-        {
-            foreach (Tile snake in this.snake.body)
-            {
-                if (snake.x == x && snake.y == y)
-                    return true;
-            }
-            return false;
-        }
-
-        public void RemoveFood(int x, int y)
-        {
-            Food foodToRemove = null;
-            foreach (Food food in this.food)
-            {
-                if (food.x == x && food.y == y)
-                {
-                    foodToRemove = food;
-                    break;
-                }
-            }
-            if(foodToRemove != null)
-            {
-                this.food.Remove(foodToRemove);
-                this.AddFood();
-            }
-        }
-        public async void Update()
-        {      
-            while (playing)
-            {
-                this.Tick();
-                this.Render();
-                await Task.Delay(200);
-            }
-            return;
-        }
-
-        public void Tick()
+        public bool Tick()
         {
             var newTile = this.snake.NextMove();
-            if (!IsSnake(newTile.x, newTile.y) && newTile.x <= Board.BOARD_SIZE_X && newTile.y <= Board.BOARD_SIZE_Y && newTile.x > 0 && newTile.y > 0)
+            if (!IsSnake(newTile.x, newTile.y) &&
+                newTile.x < this.BOARD_SIZE_X &&
+                newTile.y < this.BOARD_SIZE_Y &&
+                newTile.x >= 0 &&
+                newTile.y >= 0)
             {
                 if (IsFood(newTile.x, newTile.y))
                 {
                     RemoveFood(newTile.x, newTile.y);
                     this.snake.MoveTo(newTile, true);
+                    AddFood();
                 }
                 else
                 {
                     this.snake.MoveTo(newTile, false);
                 }
+                return true;
             }
-            else
-            {
-                GameOver(this.snake.score);
-            }
-        }
-
-        public void Render()
-        {
-            var board = DumpBoard();
-            canvas.Drawable = new GraphicsDrawable(board);
-            canvas.Invalidate();
+            return false;
         }
 
         public List<Tile> DumpBoard()
@@ -163,17 +99,58 @@ namespace SnakeGame.Models
         {
             this.snake.ChangeDirection(direction);
         }
+        #endregion
 
-        public void GameOver(int score)
+        #region Private methods
+        private void AddFood()
         {
-            playing = false;
-            
+            Random rnd = new Random(((int)DateTime.Now.Ticks));
+            var randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
+            var randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
+            while (IsSnake(randomX, randomY))
+            {
+                randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
+                randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
+            }
+            this.food.Add(new Food(randomX, randomY));
         }
 
-        public void GamePause()
+        private void RemoveFood(int x, int y)
         {
-            playing = !playing;
-            Update();
+            Food foodToRemove = null;
+            foreach (Food food in this.food)
+            {
+                if (food.x == x && food.y == y)
+                {
+                    foodToRemove = food;
+                    break;
+                }
+            }
+            if (foodToRemove != null)
+            {
+                this.food.Remove(foodToRemove);
+            }
         }
+        private bool IsFood(int x, int y)
+        {
+            foreach (Food food in this.food)
+            {
+                if (food.x == x && food.y == y)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsSnake(int x, int y)
+        {
+            foreach (Tile snake in this.snake.body)
+            {
+                if (snake.x == x && snake.y == y)
+                    return true;
+            }
+            return false;
+        }
+
+        #endregion
     }
 }

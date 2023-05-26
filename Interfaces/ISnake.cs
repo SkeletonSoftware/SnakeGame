@@ -12,9 +12,6 @@ namespace SnakeGame.Interfaces
     {
         public static readonly Color SNAKE_COLOR;
         /// <summary>
-        /// Metoda, která provede všechny akce, které by se měly stát za jeden tick
-        /// </summary>
-        /// <summary>
         /// Změna směru pohybu hada
         /// </summary>
         /// <param name="direction">Enum, který obsahuje slovně zadaný směr pohybu</param>

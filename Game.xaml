@@ -7,8 +7,9 @@
              >
     <ContentPage.Resources>
     </ContentPage.Resources>
-    
-    <VerticalStackLayout x:Name="GameContent">
+    <StackLayout BackgroundColor="White">
+        <Image Source="vertikalni_logo.png" HeightRequest="75" Margin="15" />
+        <VerticalStackLayout x:Name="GameContent" />
+    </StackLayout>
         
-    </VerticalStackLayout>
 </ContentPage>

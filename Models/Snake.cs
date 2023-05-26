@@ -21,28 +21,40 @@ namespace SnakeGame.Models
          * score = aktuální score (kolikrát se již ahd najedl)
          * 
          */
-
-        public static readonly Color SNAKE_COLOR = Color.FromRgb(255, 0, 0);
         public enum DIRECTION { UP, DOWN, LEFT, RIGHT };
 
+        
         public List<Tile> body;
         public int xSpeed;
         public int ySpeed;
         public int score;
+
+        #region Constructor
+
+        public Snake(int x, int y)
+        {
+            this.body = new List<Tile> { new Tile(x, y, Tile.TileType.Snake) };
+            this.xSpeed = 1;
+            this.ySpeed = 0;
+            this.score = 0;
+        }
+
+        #endregion
+
+        #region Public methods
 
         public Tile NextMove()
         {
             return new Tile(
                 this.body.Last().x + this.xSpeed,
                 this.body.Last().y + this.ySpeed,
-                Board.BOARD_SIZE_W,
-                SNAKE_COLOR
+                Tile.TileType.Snake
             );
         }
 
         public void MoveTo(Tile tile, bool isFood)
         {
-            if(!isFood)
+            if (!isFood)
                 this.body.RemoveAt(0);
             this.body.Add(tile);
         }
@@ -72,13 +84,7 @@ namespace SnakeGame.Models
                     break;
             }
         }
-
-        public Snake(int x, int y)
-        {
-            this.body = new List<Tile> { new Tile(x, y, Board.BOARD_SIZE_W, SNAKE_COLOR) };
-            this.xSpeed = 1;
-            this.ySpeed = 0;
-            this.score = 0;
-        }
     }
+
+    #endregion
 }
