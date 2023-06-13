@@ -20,12 +20,15 @@ namespace SnakeGame.Models
          * 
          */
         public enum Direction { Up, Down, Left, Right };
-
+        public List<Tile> Body 
+        { 
+            get => body; 
+        }
         
-        public List<Tile> body;
-        public int xSpeed;
-        public int ySpeed;
-        public int score;
+        private List<Tile> body;
+        private int xSpeed;
+        private int ySpeed;
+        private int score;
 
         #region Constructor
 

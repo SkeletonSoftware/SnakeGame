@@ -68,7 +68,7 @@ namespace SnakeGame.Models
 
         public void GamePause()
         {
-            this.board.playing = !this.board.playing;
+            this.board.Playing = !this.board.Playing;
             this.GameCycle();
         }
         #endregion
@@ -76,7 +76,7 @@ namespace SnakeGame.Models
         #region Private methods
         private async void GameCycle()
         {
-            while (board.playing)
+            while (board.Playing)
             {
                 var status = this.board.Tick();
                 var tiles = this.board.DumpBoard();

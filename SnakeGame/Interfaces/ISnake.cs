@@ -25,6 +25,10 @@ namespace SnakeGame.Interfaces
         /// Vypočte a následně vrátí, na jaké pole by se měl had posunout při příštím ticku
         /// </summary>
         public Tile NextMove();
+        /// <summary>
+        /// Vrací list políček, které skládají tělo hada
+        /// </summary>
+        public List<Tile> Body { get; }
 
     }
 }

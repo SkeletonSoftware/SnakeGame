@@ -26,11 +26,15 @@ namespace SnakeGame.Models
          * food = List obsahující instance jídel přiřazených tomuto poli
          * 
          */
+        public bool Playing
+        {
+            get => playing;
+            set => playing = value;
+        }
 
         private readonly int BoardSizeX;
         private readonly int BoardSizeY;
-
-        public bool playing;
+        private bool playing;
         private Snake snake;
         private List<Food> food;
 
@@ -84,7 +88,7 @@ namespace SnakeGame.Models
         public List<Tile> DumpBoard()
         {
             List<Tile> output = new List<Tile>();
-            foreach (Tile tile in this.snake.body)
+            foreach (Tile tile in this.snake.Body)
             {
                 output.Add(tile);
             }
@@ -143,7 +147,7 @@ namespace SnakeGame.Models
 
         private bool IsSnake(int x, int y)
         {
-            foreach (Tile snake in this.snake.body)
+            foreach (Tile snake in this.snake.Body)
             {
                 if (snake.x == x && snake.y == y)
                     return true;

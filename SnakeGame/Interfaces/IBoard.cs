@@ -34,5 +34,9 @@ namespace SnakeGame.Interfaces
         /// </summary>
         /// <returns></returns>
         public List<Tile> DumpBoard();
+        /// <summary>
+        /// Vrací informaci o stavu hry. Pokud se stále hraje, vrátí true, jinak false.
+        /// </summary>
+        public bool Playing { get; set; }
     }
 }
