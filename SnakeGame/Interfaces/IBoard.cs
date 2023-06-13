@@ -13,13 +13,13 @@ namespace SnakeGame.Interfaces
         /// Odchytávání stisků klávesnice
         /// </summary>
         /// <param name="direction">Enum definovaný pro všechny směry, kterými může had chodit</param>
-        public void KeyPress(Snake.DIRECTION direction);
+        public void KeyPress(Snake.Direction direction);
         /// <summary>
         /// Inicializuje herní desku defaultními instancemi
         /// </summary>
         public void InitBoard();
         /// <summary>
-        /// Inicializuje heríní desku zadanými instancemi. Tato metoda je určena pro unit testy, nikoliv pro produkční použití.
+        /// Inicializuje herní desku zadanými instancemi. Tato metoda je určena pro unit testy, nikoliv pro produkční použití.
         /// </summary>
         /// <param name="snake">Had, který se přidá hernímu poli</param>
         /// <param name="food">List jídel, který se přidá hernímu poli</param>

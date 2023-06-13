@@ -10,12 +10,11 @@ namespace SnakeGame.Interfaces
 {
     public interface ISnake
     {
-        public static readonly Color SNAKE_COLOR;
         /// <summary>
         /// Změna směru pohybu hada
         /// </summary>
         /// <param name="direction">Enum, který obsahuje slovně zadaný směr pohybu</param>
-        public void ChangeDirection(DIRECTION direction);
+        public void ChangeDirection(Direction direction);
         /// <summary>
         /// Posune hada na další políčko
         /// </summary>

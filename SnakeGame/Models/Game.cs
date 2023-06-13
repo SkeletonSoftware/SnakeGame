@@ -8,6 +8,23 @@ namespace SnakeGame.Models
 {
     class Game
     {
+        /* Hra
+         * 
+         * Obsahuje logiku hry
+         * Předává desce informace o zmačknutých klávesách
+         * Zařizuje renderování hry
+         * 
+         * Proměnné:
+         * xSize - šířka pole (počet políček)
+         * ySize - výška pole (počet políček)
+         * wSize - tloušťka políčka (v pixelech)
+         * 
+         * board - instance herního pole v této hře
+         * gameView - instance prvku, ve kterém je hra renderována
+         * graphicsView - instance rendereru
+         * 
+         */
+
         private Board board;
         private GraphicsView graphicsView;
         private readonly Layout gameView;
@@ -44,7 +61,7 @@ namespace SnakeGame.Models
             GameCycle();
         }
 
-        public void KeyPress(Snake.DIRECTION direction)
+        public void KeyPress(Snake.Direction direction)
         {
             this.board.KeyPress(direction);
         }

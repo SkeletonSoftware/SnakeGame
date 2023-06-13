@@ -17,7 +17,7 @@ namespace SnakeGame.Interfaces
         /// Enum definovaný pro všechny směry, kterými může had chodit
         /// </summary>
         /// <param name="direction"></param>
-        public void KeyPress(Snake.DIRECTION direction);
+        public void KeyPress(Snake.Direction direction);
         /// <summary>
         /// Dočasně přeruší hru
         /// </summary>

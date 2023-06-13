@@ -16,19 +16,19 @@ namespace SnakeGame.Models
     {
         /* Herní deska
          * 
-         * = nejnadřazenější objekt. Po jejím vytvoření se provolá metoda CreateBoard.
+         * Po jejím vytvoření se provolá metoda CreateBoard.
          * Tímto se vygeneruje herní pole
          * 
          * Proměnné:
-         * BOARD_SIZE = rozměr herního pole - x a y v počtech políček
+         * BoardSize = rozměr herního pole - x a y v počtech políček
          * playing = bool označující, zda probíhá hra.
          * snake = instance hada, který je přiřazen tomut poli
          * food = List obsahující instance jídel přiřazených tomuto poli
          * 
          */
 
-        private readonly int BOARD_SIZE_X;
-        private readonly int BOARD_SIZE_Y;
+        private readonly int BoardSizeX;
+        private readonly int BoardSizeY;
 
         public bool playing;
         private Snake snake;
@@ -37,8 +37,8 @@ namespace SnakeGame.Models
         #region Constructor
         public Board(int x_size,  int y_size)
         {
-            this.BOARD_SIZE_X = x_size;
-            this.BOARD_SIZE_Y = y_size;
+            this.BoardSizeX = x_size;
+            this.BoardSizeY = y_size;
         }
         #endregion
 
@@ -61,8 +61,8 @@ namespace SnakeGame.Models
         {
             var newTile = this.snake.NextMove();
             if (!IsSnake(newTile.x, newTile.y) &&
-                newTile.x < this.BOARD_SIZE_X &&
-                newTile.y < this.BOARD_SIZE_Y &&
+                newTile.x < this.BoardSizeX &&
+                newTile.y < this.BoardSizeY &&
                 newTile.x >= 0 &&
                 newTile.y >= 0)
             {
@@ -95,7 +95,7 @@ namespace SnakeGame.Models
             return output;
         }
 
-        public void KeyPress(Snake.DIRECTION direction)
+        public void KeyPress(Snake.Direction direction)
         {
             this.snake.ChangeDirection(direction);
         }
@@ -105,12 +105,12 @@ namespace SnakeGame.Models
         private void AddFood()
         {
             Random rnd = new Random(((int)DateTime.Now.Ticks));
-            var randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
-            var randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
+            var randomX = (int)(rnd.Next(1, BoardSizeX));
+            var randomY = (int)(rnd.Next(1, BoardSizeY));
             while (IsSnake(randomX, randomY))
             {
-                randomX = (int)(rnd.Next(1, BOARD_SIZE_X));
-                randomY = (int)(rnd.Next(1, BOARD_SIZE_Y));
+                randomX = (int)(rnd.Next(1, BoardSizeX));
+                randomY = (int)(rnd.Next(1, BoardSizeY));
             }
             this.food.Add(new Food(randomX, randomY));
         }

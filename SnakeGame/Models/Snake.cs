@@ -10,18 +10,16 @@ namespace SnakeGame.Models
     public class Snake : ISnake
     {
         /* Třída had
-         * Had je v podstatě shluk několika souřadic, které označují, kde se nachází jeho části.
+         * Had je zjednodušeně pouze pole několika souřadic, které označují, kde se nachází jeho jednotlivé části těla.
          *  
          * Proměnné:
-         * SNAKE_COLOR = barva hada
-         * DIRECTION = enum pro zvolení směru pohybu hada
-         * board = instance herního pole, ke kterému je had přiřazen
-         * body = List souřadnic všech čtverečků hada
+         * Direction = enum pro zvolení směru pohybu hada
+         * body = list souřadnic všech čtverečků hada
          * xSpeed, ySpeed = rychlost v ose x a y (o kolik čtverečků se had posune za 1 tick)
-         * score = aktuální score (kolikrát se již ahd najedl)
+         * score = aktuální score (kolikrát se již had najedl)
          * 
          */
-        public enum DIRECTION { UP, DOWN, LEFT, RIGHT };
+        public enum Direction { Up, Down, Left, Right };
 
         
         public List<Tile> body;
@@ -58,23 +56,23 @@ namespace SnakeGame.Models
                 this.body.RemoveAt(0);
             this.body.Add(tile);
         }
-        public void ChangeDirection(DIRECTION direction)
+        public void ChangeDirection(Direction direction)
         {
             switch (direction)
             {
-                case DIRECTION.UP:
+                case Direction.Up:
                     this.xSpeed = 0;
                     this.ySpeed = -1;
                     break;
-                case DIRECTION.DOWN:
+                case Direction.Down:
                     this.xSpeed = 0;
                     this.ySpeed = 1;
                     break;
-                case DIRECTION.LEFT:
+                case Direction.Left:
                     this.xSpeed = -1;
                     this.ySpeed = 0;
                     break;
-                case DIRECTION.RIGHT:
+                case Direction.Right:
                     this.xSpeed = 1;
                     this.ySpeed = 0;
                     break;
