@@ -11,39 +11,39 @@ namespace SnakeGame.Models.Tests
         public void SnakeMovementTest()
         {
             //volný pohyb
-            var board = PrepareBoard(Snake.DIRECTION.RIGHT);
+            var board = PrepareBoard(Snake.Direction.Right);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 6, 5, true);
-            board = PrepareBoard(Snake.DIRECTION.LEFT);
+            board = PrepareBoard(Snake.Direction.Left);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 4, 5, true);
-            board = PrepareBoard(Snake.DIRECTION.UP);
+            board = PrepareBoard(Snake.Direction.Up);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 5, 4, true);
-            board = PrepareBoard(Snake.DIRECTION.DOWN);
+            board = PrepareBoard(Snake.Direction.Down);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 5, 6, true);
 
             //kolize se zdí
-            board = PrepareBoard(Snake.DIRECTION.UP, 0, 0);
+            board = PrepareBoard(Snake.Direction.Up, 0, 0);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 0, 0, false);
-            board = PrepareBoard(Snake.DIRECTION.LEFT, 0, 0);
+            board = PrepareBoard(Snake.Direction.Left, 0, 0);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 0, 0, false);
-            board = PrepareBoard(Snake.DIRECTION.DOWN, 19, 19);
+            board = PrepareBoard(Snake.Direction.Down, 19, 19);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 19, 19, false);
-            board = PrepareBoard(Snake.DIRECTION.RIGHT, 19, 19);
+            board = PrepareBoard(Snake.Direction.Right, 19, 19);
             TestSnakeMovement(board.Tick(), board.DumpBoard(), 19, 19, false);
 
             //Kolize hada s hadem
-            board = PrepareBoard(Snake.DIRECTION.RIGHT, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
+            board = PrepareBoard(Snake.Direction.Right, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
             var status = board.Tick();
             Assert.IsTrue(status);
             status = board.Tick();
             Assert.IsTrue(status);
-            board.KeyPress(Snake.DIRECTION.LEFT);
+            board.KeyPress(Snake.Direction.Left);
             status = board.Tick();
             Assert.IsFalse(status);
         }
         [TestMethod()]
         public void SnakeFoodTest()
         {
-            var board = PrepareBoard(Snake.DIRECTION.RIGHT, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
+            var board = PrepareBoard(Snake.Direction.Right, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
             var status = board.Tick();
             Assert.IsTrue(status);
             status = board.Tick();
@@ -86,7 +86,7 @@ namespace SnakeGame.Models.Tests
             Assert.AreEqual(tile.y, y);
         }
 
-        private Board PrepareBoard(Snake.DIRECTION direction, int snakeX = 5, int snakeY = 5, List<Food> food = null) 
+        private Board PrepareBoard(Snake.Direction direction, int snakeX = 5, int snakeY = 5, List<Food> food = null) 
         {
             var board = new Board(20, 20);
             board.TestInitBoard(new Snake(snakeX, snakeY), food==null?new List<Food>():food);
