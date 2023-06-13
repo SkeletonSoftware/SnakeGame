@@ -29,10 +29,10 @@ public partial class Game : ContentPage
         switch(e.Data.KeyCode)
         {
             case SharpHook.Native.KeyCode.VcNumPadRight:
-                this.game.KeyPress(Snake.Direction.Down);
+                this.game.KeyPress(Snake.Direction.Right);
                 break;
             case SharpHook.Native.KeyCode.VcNumPadLeft:
-                this.game.KeyPress(Snake.Direction.Down);
+                this.game.KeyPress(Snake.Direction.Left);
                 break;
             case SharpHook.Native.KeyCode.VcNumPadUp:
                 this.game.KeyPress(Snake.Direction.Up);
