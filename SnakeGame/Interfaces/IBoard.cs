@@ -30,7 +30,7 @@ namespace SnakeGame.Interfaces
         /// <returns>Pokud tick proběhl bez chyb, vrátí nulu (0). Pokud hra skončila (had narazil), vrátí aktuální score (velikost hada)</returns>
         public int Tick();
         /// <summary>
-        /// Vrací všechny instance třídy Tile (políčka), které herní deska obsahuje.
+        /// Vrací všechny instance třídy Tile (políčka), které herní deska obsahuje. Nejdříve všechna políčka hada, potom všechna políčka jídla.
         /// </summary>
         /// <returns></returns>
         public List<Tile> DumpBoard();

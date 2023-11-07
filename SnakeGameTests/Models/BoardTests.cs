@@ -32,22 +32,22 @@ namespace SnakeGame.Models.Tests
 
             //Kolize hada s hadem
             board = PrepareBoard(Snake.Direction.Right, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
-            var status = board.Tick();
-            Assert.IsTrue(status);
-            status = board.Tick();
-            Assert.IsTrue(status);
+            var score = board.Tick();
+            Assert.AreEqual(score, 0);
+            score = board.Tick();
+            Assert.AreEqual(score, 0);
             board.KeyPress(Snake.Direction.Left);
-            status = board.Tick();
-            Assert.IsFalse(status);
+            score = board.Tick();
+            Assert.AreNotEqual(score, 0);
         }
         [TestMethod()]
         public void SnakeFoodTest()
         {
             var board = PrepareBoard(Snake.Direction.Right, food: new List<Food> { new Food(6, 5), new Food(7, 5) });
-            var status = board.Tick();
-            Assert.IsTrue(status);
-            status = board.Tick();
-            Assert.IsTrue(status);
+            var score = board.Tick();
+            Assert.AreEqual(score, 0);
+            score = board.Tick();
+            Assert.AreEqual(score, 0);
 
             var tiles = board.DumpBoard();
             var snakeCounter = 0;
@@ -70,13 +70,100 @@ namespace SnakeGame.Models.Tests
             Assert.AreEqual(foodCounter, 2);
         }
 
-        #region Private methods
-        private void TestSnakeMovement(bool isPlaying, List<Tile> tiles, int snakeX, int snakeY, bool shouldBePlaying)
+        [TestMethod()]
+        public void Board_TickTest()
         {
-            if(shouldBePlaying)
-                Assert.IsTrue(isPlaying);
+            var board = PrepareBoard(Snake.Direction.Right, 17, 5, new List<Food> { new Food(19,5) });
+            
+            //Po prvním kroku bude existovat pouze had a jídlo, hra pokračuje
+            var score = board.Tick();
+            Assert.AreEqual(score, 0);
+            var tiles = board.DumpBoard();
+            Assert.IsInstanceOfType(tiles[0], typeof(Tile));
+            Assert.IsInstanceOfType(tiles[1], typeof(Food));
+
+            //Po druhém roku bude had najedený, existují tedy dvě políčka hada, jídlo a hra pokračuje
+            score = board.Tick();
+            Assert.AreEqual(score, 0);
+            tiles = board.DumpBoard();
+            var qe = tiles[0].Equals(new Tile(18, 5, Tile.TileType.Snake));
+            var rov = tiles[0] == new Tile(18, 5, Tile.TileType.Snake);
+            Assert.IsInstanceOfType(tiles[0], typeof(Tile));
+            Assert.IsInstanceOfType(tiles[1], typeof(Tile));
+            Assert.IsInstanceOfType(tiles[2], typeof(Food));
+            
+            //Po třetím kroku had narazí do zdi. Stav je tedy stejný jako minule, ale hra nepokračuje
+            score = board.Tick();
+            Assert.AreEqual(score, 2);
+            var tilesAfterCollision = board.DumpBoard();
+            Assert.IsInstanceOfType(tilesAfterCollision[0], typeof(Tile));
+            Assert.IsInstanceOfType(tilesAfterCollision[1], typeof(Tile));
+            Assert.IsInstanceOfType(tilesAfterCollision[2], typeof(Food));
+        }
+
+        [TestMethod()]
+        public void Board_KeyPressTest()
+        {
+            var snake = new Snake(3, 3);
+
+            //Změna směru vpravo
+            snake.ChangeDirection(Snake.Direction.Right);
+            var nextTile = snake.NextMove();
+            Assert.AreEqual(4, nextTile.x);
+            Assert.AreEqual(3, nextTile.y);
+
+            //Změna směru dolů
+            snake.ChangeDirection(Snake.Direction.Down);
+            nextTile = snake.NextMove();
+            Assert.AreEqual(3, nextTile.x);
+            Assert.AreEqual(4, nextTile.y);
+
+            //Změna směru vlevo
+            snake.ChangeDirection(Snake.Direction.Left);
+            nextTile = snake.NextMove();
+            Assert.AreEqual(2, nextTile.x);
+            Assert.AreEqual(3, nextTile.y);
+
+            //Změna směru nahoru
+            snake.ChangeDirection(Snake.Direction.Up);
+            nextTile = snake.NextMove();
+            Assert.AreEqual(3, nextTile.x);
+            Assert.AreEqual(2, nextTile.y);
+        }
+
+        [TestMethod()]
+        public void Board_InitBoard_Test()
+        {
+            var board = new Board(20, 20);
+            board.InitBoard();
+            
+            //Hra běží
+            Assert.IsTrue(board.Playing);
+
+            var Tiles = board.DumpBoard();
+            var snakeCounter = 0;
+            var foodCounter = 0;
+            foreach(Tile t in Tiles)
+            {
+                if(t.type == Tile.TileType.Food)
+                    foodCounter++;
+                else if(t.type == Tile.TileType.Snake)
+                    snakeCounter++;
+            }
+            //Na herním poli se nachází had
+            Assert.AreNotEqual(snakeCounter, 0);
+            
+            //Na herním poli se nachází jídlo
+            Assert.AreNotEqual(foodCounter, 0);
+        }
+
+        #region Private methods
+        private void TestSnakeMovement(int score, List<Tile> tiles, int snakeX, int snakeY, bool shouldBePlaying)
+        {
+            if (shouldBePlaying)
+                Assert.AreEqual(score, 0);
             else
-                Assert.IsFalse(isPlaying);
+                Assert.AreNotEqual(score, 0);
             CoordinatesAreEqual(tiles.First(), snakeX, snakeY);
         }
 
