@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SnakeGame.ScorePage"
+             xmlns:components="clr-namespace:SnakeGame.Components"
+             Title="ScorePage"
+             x:Name="ScorePageRef">
+    <VerticalStackLayout VerticalOptions="Start" Spacing="30">
+        <Label 
+            Text="Konec hry"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="Title"
+            Padding="20,0,20,0"
+            Margin="0,200,0,0"/>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <components:EndGameLabel 
+                Text="Délka hada: "
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                FontSize="Title"/>
+            <components:EndGameLabel 
+                HorizontalOptions="Center"
+                FontSize="Title"
+                Text="{Binding Score, Source={x:Reference ScorePageRef}}" />
+        </StackLayout>
+        <Image
+            Source="dotnet_bot.png"
+            SemanticProperties.Description="Cute dot net bot waving hi to you!"
+            HeightRequest="200"
+            HorizontalOptions="Center" />
+        <Button 
+            Text="Hlavní menu" 
+            Clicked="MainMenuClicked" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"  
+            FontSize="Large" />
+    </VerticalStackLayout>
+</ContentPage>

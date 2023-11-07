@@ -27,8 +27,8 @@ namespace SnakeGame.Interfaces
         /// <summary>
         /// Hlavní smyčka hry. Provoláním metody se provede jeden herní cyklus (=tick).
         /// </summary>
-        /// <returns>Zda tick proběhl bez chyb. Jinak také řečeno, zda hra dále pokračuje (true) nebo tímto tickem skončila (false)</returns>
-        public bool Tick();
+        /// <returns>Pokud tick proběhl bez chyb, vrátí nulu (0). Pokud hra skončila (had narazil), vrátí aktuální score (velikost hada)</returns>
+        public int Tick();
         /// <summary>
         /// Vrací všechny instance třídy Tile (políčka), které herní deska obsahuje.
         /// </summary>

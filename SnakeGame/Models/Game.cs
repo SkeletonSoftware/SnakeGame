@@ -33,6 +33,23 @@ namespace SnakeGame.Models
         private readonly int ySize;
         private readonly int wSize;
 
+        #region EventArgs
+        public class GameOverEventArgs : EventArgs
+        {
+            private readonly int _score;
+
+            public GameOverEventArgs(int score)
+            {
+                _score = score;
+            }
+
+            public int Score
+            {
+                get { return _score; }
+            }
+        }
+        #endregion
+
         #region Constructor
         public Game(Layout gameView, int xSize, int ySize, int wSize)
         {
@@ -71,6 +88,8 @@ namespace SnakeGame.Models
             this.board.Playing = !this.board.Playing;
             this.GameCycle();
         }
+
+        public EventHandler<GameOverEventArgs> GameEnded;
         #endregion
 
         #region Private methods
@@ -81,8 +100,9 @@ namespace SnakeGame.Models
                 var status = this.board.Tick();
                 var tiles = this.board.DumpBoard();
                 Render(tiles);
-                if (!status)
+                if (status != 0)
                 {
+                    GameEnded?.Invoke(this, new GameOverEventArgs(status));
                     GamePause();
                 }
                 await Task.Delay(200);

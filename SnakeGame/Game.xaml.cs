@@ -1,5 +1,6 @@
 using SnakeGame.Models;
 using SharpHook;
+using static SnakeGame.Models.Game;
 
 namespace SnakeGame;
 
@@ -21,8 +22,14 @@ public partial class Game : ContentPage
         var boardSizeW = 25;
 
         this.game = new Models.Game(GameContent, boardSizeX, boardSizeY, boardSizeW);
+        this.game.GameEnded += GameEnded;
         this.game.InitGame();
 	}
+
+    private void GameEnded(object sender, GameOverEventArgs e)
+    {
+        App.Current.MainPage = new ScorePage(e.Score);
+    }
 
     private void OnKeyPressed(object sender, KeyboardHookEventArgs e)
     {

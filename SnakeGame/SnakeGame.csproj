@@ -57,4 +57,13 @@
 		<PackageReference Include="SharpHook" Version="4.2.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Components\EndGameLabel.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ScorePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

@@ -61,7 +61,7 @@ namespace SnakeGame.Models
             this.food = food;
         }
 
-        public bool Tick()
+        public int Tick()
         {
             var newTile = this.snake.NextMove();
             if (!IsSnake(newTile.x, newTile.y) &&
@@ -80,9 +80,9 @@ namespace SnakeGame.Models
                 {
                     this.snake.MoveTo(newTile, false);
                 }
-                return true;
+                return 0;
             }
-            return false;
+            return snake.Body.Count;
         }
 
         public List<Tile> DumpBoard()
