@@ -47,4 +47,9 @@ public partial class Game : ContentPage
                 break;
         }
     }
+    private void SwipeUp(object sender, SwipedEventArgs e) => this.game.KeyPress(Snake.Direction.Up);
+    private void SwipeDown(object sender, SwipedEventArgs e) => this.game.KeyPress(Snake.Direction.Down);
+    private void SwipeRight(object sender, SwipedEventArgs e) => this.game.KeyPress(Snake.Direction.Right);
+    private void SwipeLeft(object sender, SwipedEventArgs e) => this.game.KeyPress(Snake.Direction.Left);
+
 }

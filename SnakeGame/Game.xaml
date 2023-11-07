@@ -8,6 +8,12 @@
     <ContentPage.Resources>
     </ContentPage.Resources>
     <StackLayout BackgroundColor="White">
+        <StackLayout.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Up" Swiped="SwipeUp" />
+            <SwipeGestureRecognizer Direction="Down" Swiped="SwipeDown" />
+            <SwipeGestureRecognizer Direction="Right" Swiped="SwipeRight" />
+            <SwipeGestureRecognizer Direction="Left" Swiped="SwipeLeft" />
+        </StackLayout.GestureRecognizers>
         <Image Source="vertikalni_logo.png" HeightRequest="75" Margin="15" />
         <VerticalStackLayout x:Name="GameContent" />
     </StackLayout>
