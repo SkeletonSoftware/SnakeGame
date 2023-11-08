@@ -104,31 +104,35 @@ namespace SnakeGame.Models.Tests
         [TestMethod()]
         public void Board_KeyPressTest()
         {
-            var snake = new Snake(3, 3);
-
-            //Změna směru vpravo
-            snake.ChangeDirection(Snake.Direction.Right);
-            var nextTile = snake.NextMove();
-            Assert.AreEqual(4, nextTile.x);
-            Assert.AreEqual(3, nextTile.y);
-
-            //Změna směru dolů
-            snake.ChangeDirection(Snake.Direction.Down);
-            nextTile = snake.NextMove();
-            Assert.AreEqual(3, nextTile.x);
-            Assert.AreEqual(4, nextTile.y);
-
-            //Změna směru vlevo
-            snake.ChangeDirection(Snake.Direction.Left);
-            nextTile = snake.NextMove();
-            Assert.AreEqual(2, nextTile.x);
-            Assert.AreEqual(3, nextTile.y);
+            var board = PrepareBoard(Snake.Direction.Right, 5, 5, new List<Food> { });
 
             //Změna směru nahoru
-            snake.ChangeDirection(Snake.Direction.Up);
-            nextTile = snake.NextMove();
-            Assert.AreEqual(3, nextTile.x);
-            Assert.AreEqual(2, nextTile.y);
+            board.KeyPress(Snake.Direction.Up);
+            board.Tick();
+            var tiles = board.DumpBoard();
+            Assert.AreEqual(tiles[0].x, 5);
+            Assert.AreEqual(tiles[0].y, 4);
+
+            //Změna směru vpravo
+            board.KeyPress(Snake.Direction.Right);
+            board.Tick();
+            tiles = board.DumpBoard();
+            Assert.AreEqual(tiles[0].x, 6);
+            Assert.AreEqual(tiles[0].y, 4);
+
+            //Změna směru dolů
+            board.KeyPress(Snake.Direction.Down);
+            board.Tick();
+            tiles = board.DumpBoard();
+            Assert.AreEqual(tiles[0].x, 6);
+            Assert.AreEqual(tiles[0].y, 5);
+
+            //Změna směru vlevo
+            board.KeyPress(Snake.Direction.Left);
+            board.Tick();
+            tiles = board.DumpBoard();
+            Assert.AreEqual(tiles[0].x, 5);
+            Assert.AreEqual(tiles[0].y, 5);
         }
 
         [TestMethod()]
