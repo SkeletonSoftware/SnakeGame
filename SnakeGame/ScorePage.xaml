@@ -18,10 +18,14 @@
                 Text="Délka hada: "
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
+                AndroidColor="Red"
+                WindowsColor="Aqua"
                 FontSize="Title"/>
             <components:EndGameLabel 
                 HorizontalOptions="Center"
                 FontSize="Title"
+                AndroidColor="Red"
+                WindowsColor="Aqua"
                 Text="{Binding Score, Source={x:Reference ScorePageRef}}" />
         </StackLayout>
         <Image

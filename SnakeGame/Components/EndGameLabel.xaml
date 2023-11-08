@@ -2,10 +2,5 @@
 <Label xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SnakeGame.Components.EndGameLabel"
-             xmlns:vm="clr-namespace:SnakeGame.Components.ViewModels"
-             x:Name="EndGameLabelRef"
-             TextColor="{Binding CustomTextColor}">
-    <Label.BindingContext>
-        <vm:EndGameLabelViewModel />
-    </Label.BindingContext>
+             xmlns:vm="clr-namespace:SnakeGame.Components.ViewModels">
 </Label>
